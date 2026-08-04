@@ -1,0 +1,39 @@
+# Virtual Environment
+.venv/
+
+# Environment Variables
+.env
+frontend/.env.local
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# IDE
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test Cache
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Node Modules
+frontend/node_modules/
+
+# Next.js Build
+frontend/.next/
+frontend/out/
+
+# Python Build
+build/
+dist/
+*.egg-info/
