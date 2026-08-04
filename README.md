@@ -20,8 +20,6 @@ I built BugPilot AI to reduce this effort.
 
 Instead of manually searching historical tickets, the application automatically retrieves similar resolved bugs, provides their verified engineer solutions as context, and generates an investigation report that engineers can use as a starting point.
 
-Rather than replacing engineers, the goal is to help them investigate issues faster.
-
 
 ---
 
@@ -179,17 +177,15 @@ BugPilotAI
 ---
 
 
-# Challenges
+# Engineering Decisions
 
-While building this project, I worked on several practical engineering challenges:
+Some implementation decisions made while building BugPilot AI:
 
-- Designing a modular LangGraph workflow instead of relying on a single LLM prompt.
-- Building a Retrieval-Augmented Generation pipeline using historical bug reports.
-- Creating embeddings and performing semantic similarity search using FAISS.
-- Passing retrieved context between LangGraph nodes.
-- Managing ticket lifecycle from investigation to verified resolution.
-- Connecting a FastAPI backend with a Next.js frontend.
-- Designing a clean interface for engineers to review AI investigations and previous solutions.
+- Used Retrieval-Augmented Generation (RAG) instead of relying only on an LLM so previous verified bug resolutions could improve future investigations.
+- Structured the AI workflow with LangGraph to separate issue classification, root cause analysis, and investigation report generation into independent steps.
+- Used FAISS for semantic similarity search to retrieve related historical bug reports efficiently.
+- Stored verified engineer solutions so they could become part of the knowledge base for future investigations.
+- Chose FastAPI and Next.js to keep the backend and frontend modular and easy to extend.
 
 
 ---
