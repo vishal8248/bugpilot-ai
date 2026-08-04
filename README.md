@@ -216,13 +216,39 @@ Some planned improvements include:
 
 # Screenshots
 
-The `screenshots` folder contains images of:
+## Dashboard
 
-- Dashboard
-- Bug Analysis
-- Ticket Details
-- Similar Previous Bugs
-- History Page
+![Dashboard](screenshots/Dashboard.png)
+
+---
+
+## Analyze Page
+
+![Analyze Page](screenshots/Analyze_Page.png)
+
+---
+
+## Analyze Ticket
+
+![Analyze Ticket](screenshots/Analyze_Ticket.png)
+
+---
+
+## Ticket Page
+
+![Ticket Page](screenshots/Ticket_Page.png)
+
+---
+
+## History Page
+
+![History Page](screenshots/History_Page.png)
+
+---
+
+## History Ticket
+
+![History Ticket](screenshots/History_Ticket.png)
 
 
 ---
