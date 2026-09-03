@@ -74,7 +74,7 @@ Future versions will expand into a complete AI-powered engineering assistant wit
 - FAISS
 
 ## Database
-- SQLite
+- Postgresql
 
 
 # System Architecture
