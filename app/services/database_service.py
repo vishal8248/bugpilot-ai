@@ -1,17 +1,27 @@
-import sqlite3
+import os
 
-DATABASE_PATH = "data/bugpilot.db"
+import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+def get_connection():
+    return psycopg2.connect(DATABASE_URL)
 
 
 def create_database():
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS investigations (
 
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id SERIAL PRIMARY KEY,
 
         title TEXT,
 
@@ -40,12 +50,14 @@ def create_database():
     """)
 
     connection.commit()
+
+    cursor.close()
     connection.close()
 
 
 def save_investigation(result):
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -62,7 +74,7 @@ def save_investigation(result):
         investigation_report
 
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     """, (
 
         result["title"],
@@ -78,12 +90,14 @@ def save_investigation(result):
     ))
 
     connection.commit()
+
+    cursor.close()
     connection.close()
 
 
 def get_all_investigations():
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -101,6 +115,7 @@ def get_all_investigations():
 
     rows = cursor.fetchall()
 
+    cursor.close()
     connection.close()
 
     return rows
@@ -108,7 +123,7 @@ def get_all_investigations():
 
 def get_closed_investigations():
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -126,6 +141,7 @@ def get_closed_investigations():
 
     rows = cursor.fetchall()
 
+    cursor.close()
     connection.close()
 
     return rows
@@ -133,32 +149,34 @@ def get_closed_investigations():
 
 def get_investigation_by_id(ticket_id):
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
         SELECT *
         FROM investigations
-        WHERE id = ?
+        WHERE id = %s
     """, (ticket_id,))
 
     row = cursor.fetchone()
 
+    cursor.close()
     connection.close()
 
     return row
 
+
 def close_ticket(ticket_id, actual_solution):
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
         UPDATE investigations
         SET
-            actual_solution = ?,
+            actual_solution = %s,
             status = 'Closed'
-        WHERE id = ?
+        WHERE id = %s
     """, (
 
         actual_solution,
@@ -167,12 +185,14 @@ def close_ticket(ticket_id, actual_solution):
     ))
 
     connection.commit()
+
+    cursor.close()
     connection.close()
 
 
 def get_closed_tickets_for_rag():
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -195,6 +215,7 @@ def get_closed_tickets_for_rag():
 
     rows = cursor.fetchall()
 
+    cursor.close()
     connection.close()
 
     return rows
@@ -202,18 +223,19 @@ def get_closed_tickets_for_rag():
 
 def get_history_ticket(ticket_id):
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
         SELECT *
         FROM investigations
-        WHERE id = ?
+        WHERE id = %s
           AND status = 'Closed'
     """, (ticket_id,))
 
     row = cursor.fetchone()
 
+    cursor.close()
     connection.close()
 
-    return row
+    return rowy
