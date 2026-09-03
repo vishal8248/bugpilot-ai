@@ -106,7 +106,7 @@ Classification Root Cause Investigation
   Embeddings               Database
                   │
                   ▼
-              SQLite
+              Postgresql
 ```
 
 
